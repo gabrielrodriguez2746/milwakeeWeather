@@ -1,0 +1,26 @@
+import groovy.transform.Field
+
+@Field private String TAG_VERSION_NAME = 'versionName'
+@Field private String TAG_VERSION_CODE = 'versionCode'
+
+ext.getAppVersionCode = {
+    getVersionProps(getAppVersionFile())[TAG_VERSION_CODE].toInteger()
+}
+
+ext.getAppVersionName = {
+    getVersionProps(getAppVersionFile())[TAG_VERSION_NAME].toString()
+}
+
+static def getVersionProps(File versionPropsFile) {
+    def versionProps = new Properties()
+    versionProps.load(new FileInputStream(versionPropsFile))
+    return versionProps
+}
+
+def getAppVersionFile() {
+    return file(getAppVersionPath())
+}
+
+private String getAppVersionPath() {
+    return "$project.rootDir/tools/app_version_code.properties"
+}
