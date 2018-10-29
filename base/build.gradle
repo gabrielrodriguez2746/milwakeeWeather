@@ -1,52 +1,27 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply from: "$project.rootDir/tools/app_versioning.gradle"
 
 android {
-
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
-        applicationId "com.milwaukee.weather"
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode getAppVersionCode()
-        versionName getAppVersionName()
+        versionCode 1
+        versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-    buildTypes {
-
-        debug {
-            minifyEnabled false
-            debuggable true
-            shrinkResources false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
-
-            buildConfigField "boolean", "SERVICE_LOGS_FLAG", "true"
-        }
-
-        release {
-            minifyEnabled true
-            debuggable false
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField "boolean", "SERVICE_LOGS_FLAG", "false"
-        }
+        vectorDrawables.useSupportLibrary = true
     }
 
     dataBinding {
         enabled = true
     }
-
 }
 
 dependencies {
-
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':base')
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // RxJava
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxJavaVersion"
@@ -70,7 +45,9 @@ dependencies {
 
     // Network
     implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.retrofitVersion"
     implementation "com.google.code.gson:gson:$rootProject.ext.gsonVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.okhttpVersion"
 
     // Architecture components
     implementation "android.arch.persistence.room:runtime:$rootProject.ext.roomVersion"
