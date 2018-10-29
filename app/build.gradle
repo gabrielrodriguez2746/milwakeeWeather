@@ -10,11 +10,10 @@ android {
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
-        applicationId "com.milwaukee.weather"
         targetSdkVersion rootProject.ext.targetSdkVersion
+        applicationId "com.milwaukee.weather"
         versionCode getAppVersionCode()
         versionName getAppVersionName()
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
 
@@ -32,6 +31,7 @@ android {
             debuggable false
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
             buildConfigField "boolean", "SERVICE_LOGS_FLAG", "false"
         }
     }
@@ -46,7 +46,7 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':base')
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation project(':location')
 
     // RxJava
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxJavaVersion"
@@ -77,7 +77,4 @@ dependencies {
     implementation "android.arch.persistence.room:rxjava2:$rootProject.ext.roomVersion"
     kapt "android.arch.persistence.room:compiler:$rootProject.ext.roomVersion"
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }

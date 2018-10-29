@@ -8,16 +8,19 @@ import dagger.Reusable
 @Module
 object NetworkConfigurationModule {
 
-    @Provides
-    @JvmStatic
-    @Reusable
-    @MilwaukeeWeatherApiKey
-    fun provideWetaherApiKey() = ""
+    private const val API_KEY = "7c3280069fd3897156c39459f4b830d2"
+    private const val BASE_URL = "api.openweathermap.org/data/2.5/"
 
     @Provides
     @JvmStatic
     @Reusable
     @MilwaukeeWeatherApiKey
-    fun provideWetaherApiBaseUrl() = ""
+    fun provideWeatherApiKey() = API_KEY
+
+    @Provides
+    @JvmStatic
+    @Reusable
+    @MilwaukeeWeatherApiKey
+    fun provideWeatherApiBaseUrl() = BASE_URL
 
 }

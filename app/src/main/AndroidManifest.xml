@@ -2,14 +2,13 @@
           package="com.milwaukee.weather">
 
     <application
-            android:name=".MilwaukeeWeatherApplication"
+            android:name=".application.MilwaukeeWeatherApplication"
             android:allowBackup="true"
             android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-
 
     </application>
 

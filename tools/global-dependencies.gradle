@@ -24,6 +24,9 @@ ext {
     supportVersion = "28.0.0"
     constraintLayoutVersion = "1.1.3"
 
+    // Play services
+    playServicesVersion = "16.0.0"
+
     // Networking
     retrofitVersion = "2.4.0"
     gsonVersion = "2.8.1"

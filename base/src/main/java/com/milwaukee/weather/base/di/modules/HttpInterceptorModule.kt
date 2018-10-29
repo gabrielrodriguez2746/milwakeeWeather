@@ -1,7 +1,7 @@
 package com.milwaukee.weather.base.di.modules
 
 import android.util.Log
-import com.milwaukee.weather.base.BaseConfiguration
+import com.milwaukee.weather.base.interfaces.BaseConfiguration
 import com.milwaukee.weather.base.di.MilwaukeeWeatherApiKey
 import dagger.Module
 import dagger.Provides
@@ -18,13 +18,15 @@ object HttpInterceptorModule {
     private const val ACCEPT = "Accept"
     private const val CONTENT_TYPE = "Content-Type"
     private const val APPLICATION_JSON = "application/json"
+    private const val APP_ID = "appid"
+    private const val SERVER = "SERVER"
 
     @Provides
     @JvmStatic
     @Reusable
     @IntoSet
     fun provideServiceLogInterceptor(configuration: BaseConfiguration): Interceptor {
-        return HttpLoggingInterceptor { message -> Log.i("SERVER", message) }
+        return HttpLoggingInterceptor { message -> Log.i(SERVER, message) }
             .applyLoggingInterceptorLogs(configuration.areAppLogsEnable())
     }
 
@@ -70,7 +72,7 @@ object HttpInterceptorModule {
     }
 
     private fun Request.buildNewUrl(apiKey: String): HttpUrl {
-        return url().newBuilder().addQueryParameter("key", apiKey).build()
+        return url().newBuilder().addQueryParameter(APP_ID, apiKey).build()
     }
 
 }
