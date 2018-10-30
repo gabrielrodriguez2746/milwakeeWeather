@@ -3,8 +3,9 @@ package com.milwaukee.weather.location.provider
 import android.Manifest
 import android.support.annotation.RequiresPermission
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.milwaukee.weather.base.interfaces.LocationProvider
+import com.milwaukee.weather.base.location.LocationProvider
 import com.milwaukee.weather.base.model.Location
+import com.milwaukee.weather.location.exceptions.NoLocationAvailableException
 import io.reactivex.Single
 import io.reactivex.SingleEmitter
 import javax.inject.Inject
@@ -32,7 +33,7 @@ class MilwaukeeLocationController @Inject constructor(
         if (androidLocation != null) {
             onSuccess(Location(androidLocation.latitude, androidLocation.longitude))
         } else {
-            onError(Throwable("No Location available")) // TODO Improve this to use a better exception
+            onError(NoLocationAvailableException())
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.milwaukee.weather.base.interfaces
+package com.milwaukee.weather.base.location
 
 import com.milwaukee.weather.base.model.Location
 import io.reactivex.Single

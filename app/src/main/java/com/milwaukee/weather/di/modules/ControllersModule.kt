@@ -8,5 +8,4 @@ import dagger.Module
         LocationControllerModule::class
     ]
 )
-class ControllersModule {
-}
+class ControllersModule

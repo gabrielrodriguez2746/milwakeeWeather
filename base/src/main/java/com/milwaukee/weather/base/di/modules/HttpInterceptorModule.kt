@@ -1,7 +1,7 @@
 package com.milwaukee.weather.base.di.modules
 
 import android.util.Log
-import com.milwaukee.weather.base.interfaces.BaseConfiguration
+import com.milwaukee.weather.base.config.BaseConfiguration
 import com.milwaukee.weather.base.di.MilwaukeeWeatherApiKey
 import dagger.Module
 import dagger.Provides

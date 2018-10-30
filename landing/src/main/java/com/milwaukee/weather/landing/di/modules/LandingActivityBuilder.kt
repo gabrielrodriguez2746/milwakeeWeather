@@ -10,7 +10,7 @@ abstract class LandingActivityBuilder {
 
     @ContributesAndroidInjector(
         modules = [
-            LandingContorllerModule::class
+            LandingControllerModule::class
         ]
     )
     @ActivityScope
