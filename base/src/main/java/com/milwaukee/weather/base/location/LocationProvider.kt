@@ -11,6 +11,7 @@ interface LocationProvider {
     /**
      * Returns a single with the current location.
      * @return single with current location.
+     * @throws [Throwable] if location can not be provide
      */
     fun getLocation(): Single<Location>
 

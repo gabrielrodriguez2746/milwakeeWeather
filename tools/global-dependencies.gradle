@@ -5,13 +5,13 @@ ext {
     compileSdkVersion = 28
     targetSdkVersion = 28
     buildToolsVersion = '28.0.3'
-    gradleBuildToolsVersion = '3.3.0-beta01'
+    gradleBuildToolsVersion = '3.3.0-beta02'
 
     // Kotlin
     kotlin_version = '1.2.71'
 
     // Dagger
-    daggerVersion = '2.13'
+    daggerVersion = '2.16'
     daggerAndroidVersion = '2.16'
 
     // RxJava
