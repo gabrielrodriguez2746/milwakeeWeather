@@ -1,18 +1,18 @@
 package com.milwaukee.weather.landing.controllers
 
 import android.Manifest
-import com.milwaukee.weather.base.location.LocationProvider
+import com.milwaukee.weather.base.location.LocationController
 import com.milwaukee.weather.base.model.Location
-import com.milwaukee.weather.base.permissions.PermissionWrapper
-import com.milwaukee.weather.base.permissions.UnknownException
+import com.milwaukee.weather.permissions.exceptions.UnknownException
 import com.milwaukee.weather.base.places.controllers.PlaceController
 import com.milwaukee.weather.landing.R
+import com.milwaukee.weather.permissions.controllers.base.PermissionController
 import io.reactivex.Single
 import javax.inject.Inject
 
 class MilwaukeeLandingController @Inject constructor(
-    private val permissionsWrapper: PermissionWrapper,
-    private val locationProvider: LocationProvider,
+    private val permissionsWrapper: PermissionController,
+    private val locationProvider: LocationController,
     private val placeController: PlaceController
 ) : LandingController {
 

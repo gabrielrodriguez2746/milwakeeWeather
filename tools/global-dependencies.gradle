@@ -12,6 +12,7 @@ ext {
 
     // Milwaukee internal
     milwaukeeBaseTestVersion = "1.0@aar"
+    milwaukeePermissionsVersion = "1.0@aar"
 
     // Dagger
     daggerVersion = '2.16'

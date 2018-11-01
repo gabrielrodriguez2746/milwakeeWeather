@@ -1,4 +1,4 @@
-package com.milwaukee.weather.base.permissions
+package com.milwaukee.weather.permissions.controllers
 
 import android.content.DialogInterface
 import android.content.Intent
@@ -8,7 +8,13 @@ import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import com.milwaukee.weather.base.R
+import com.milwaukee.weather.permissions.R
+import com.milwaukee.weather.permissions.models.PermissionResult
+import com.milwaukee.weather.permissions.models.PermissionState
+import com.milwaukee.weather.permissions.controllers.base.PermissionController
+import com.milwaukee.weather.permissions.exceptions.CompleteDeniedPermissionsException
+import com.milwaukee.weather.permissions.exceptions.DeniedPermissionsException
+import com.milwaukee.weather.permissions.exceptions.UnknownException
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -16,7 +22,7 @@ import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 
-class MilwaukeePermissionWrapper : PermissionWrapper {
+class MilwaukeePermissionController : PermissionController {
 
     private lateinit var activity: AppCompatActivity
 
@@ -47,7 +53,7 @@ class MilwaukeePermissionWrapper : PermissionWrapper {
             .observeOn(AndroidSchedulers.mainThread())
             .doOnError {
                 if (it is CompleteDeniedPermissionsException) {
-                    provideAlertDialogFromParameters(R.string.base_app_settings, R.string.base_permissions_settings,
+                    provideAlertDialogFromParameters(R.string.permissions_app_settings, R.string.permissions_settings,
                         { dialogInterface -> dialogInterface.dismiss()
                         }, { startSettingsIntent() }).show()
                 }
@@ -73,7 +79,12 @@ class MilwaukeePermissionWrapper : PermissionWrapper {
                     { dialogInterface ->
                         dialogInterface.dismiss()
                         val result =
-                            permissions.map { permission -> PermissionResult(permission, PermissionState.DENIED) }
+                            permissions.map { permission ->
+                                PermissionResult(
+                                    permission,
+                                    PermissionState.DENIED
+                                )
+                            }
                         permissionSubject.onNext(Pair(requestCode, result))
                     }, {
                         ActivityCompat.requestPermissions(activity, permissions, requestCode)
@@ -94,10 +105,10 @@ class MilwaukeePermissionWrapper : PermissionWrapper {
             setTitle(title)
             setMessage(messageRationale)
             setCancelable(false)
-            setNegativeButton(R.string.base_permission_rationale_skip) { dialogInterface, _ ->
+            setNegativeButton(R.string.permissions_rationale_skip) { dialogInterface, _ ->
                 negativeButtonAction.invoke(dialogInterface)
             }
-            setPositiveButton(R.string.base_permission_rationale_accept) { _, _ ->
+            setPositiveButton(R.string.permissions_rationale_accept) { _, _ ->
                 positiveButtonAction.invoke()
             }
         }

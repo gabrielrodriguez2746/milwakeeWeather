@@ -3,7 +3,7 @@ package com.milwaukee.weather.location.di.modules
 import android.content.Context
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.milwaukee.weather.base.location.LocationProvider
+import com.milwaukee.weather.base.location.LocationController
 import com.milwaukee.weather.location.provider.MilwaukeeLocationController
 import dagger.Binds
 import dagger.Module
@@ -14,7 +14,7 @@ import dagger.Reusable
 abstract class LocationControllerModule {
 
     @Binds
-    abstract fun bindLocationProvider(locationController: MilwaukeeLocationController): LocationProvider
+    abstract fun bindLocationProvider(locationController: MilwaukeeLocationController): LocationController
 
     @Module
     companion object {

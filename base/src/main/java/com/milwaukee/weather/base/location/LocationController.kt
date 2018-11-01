@@ -6,7 +6,7 @@ import io.reactivex.Single
 /**
  * This class provides the current location.
  */
-interface LocationProvider {
+interface LocationController {
 
     /**
      * Returns a single with the current location.

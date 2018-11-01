@@ -1,10 +1,9 @@
 package com.milwaukee.weather.places.repositories
 
-import com.google.gson.JsonElement
 import com.google.gson.JsonObject
-import com.milwaukee.weather.base.mappers.BaseMapper
 import com.milwaukee.weather.base.model.Location
 import com.milwaukee.weather.basetest.readJsonFile
+import com.milwaukee.weather.places.mappers.base.DetailMapper
 import com.milwaukee.weather.places.rest.PlaceDetailService
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.eq
@@ -22,7 +21,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class DetailRepositoryTest {
 
     @Mock
-    lateinit var mapper: BaseMapper<JsonElement, Location>
+    lateinit var mapper: DetailMapper
 
     @Mock
     lateinit var detailService: PlaceDetailService

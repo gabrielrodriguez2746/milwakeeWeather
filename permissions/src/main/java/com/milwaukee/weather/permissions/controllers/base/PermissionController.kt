@@ -1,4 +1,4 @@
-package com.milwaukee.weather.base.permissions
+package com.milwaukee.weather.permissions.controllers.base
 
 import android.support.annotation.StringRes
 import android.support.v4.app.ActivityCompat
@@ -8,7 +8,7 @@ import io.reactivex.Single
 /**
  * This a request permissions wrapper to manage it form controller classes
  */
-interface PermissionWrapper : ActivityCompat.OnRequestPermissionsResultCallback {
+interface PermissionController : ActivityCompat.OnRequestPermissionsResultCallback {
 
     /**
      * Allow to set the activity bind to the permissions request

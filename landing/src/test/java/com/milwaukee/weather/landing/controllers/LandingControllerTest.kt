@@ -1,10 +1,11 @@
 package com.milwaukee.weather.landing.controllers
 
-import com.milwaukee.weather.base.location.LocationProvider
+import com.milwaukee.weather.base.location.LocationController
 import com.milwaukee.weather.base.model.Location
-import com.milwaukee.weather.base.permissions.PermissionWrapper
-import com.milwaukee.weather.base.permissions.CompleteDeniedPermissionsException
-import com.milwaukee.weather.base.permissions.UnknownException
+import com.milwaukee.weather.base.places.controllers.PlaceController
+import com.milwaukee.weather.permissions.controllers.base.PermissionController
+import com.milwaukee.weather.permissions.exceptions.CompleteDeniedPermissionsException
+import com.milwaukee.weather.permissions.exceptions.UnknownException
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.anyArray
 import com.nhaarman.mockito_kotlin.whenever
@@ -20,23 +21,26 @@ import org.mockito.junit.MockitoJUnitRunner
 class LandingControllerTest {
 
     @Mock
-    private lateinit var permissionsWrapper: PermissionWrapper
+    private lateinit var permissionsController: PermissionController
 
     @Mock
-    private lateinit var locationProvider: LocationProvider
+    private lateinit var locationProvider: LocationController
+
+    @Mock
+    private lateinit var placeController: PlaceController
 
     private lateinit var controller: MilwaukeeLandingController
 
     @Before
     fun setupController() {
         MockitoAnnotations.initMocks(this)
-        controller = MilwaukeeLandingController(permissionsWrapper, locationProvider)
+        controller = MilwaukeeLandingController(permissionsController, locationProvider, placeController)
     }
 
     @Test(expected = CompleteDeniedPermissionsException::class)
     fun `Location permissions error - ask location - get Exception`() {
         val expectedException = CompleteDeniedPermissionsException()
-        whenever(permissionsWrapper.requestPermissions(anyArray(), any(), any(), any())).thenThrow(expectedException)
+        whenever(permissionsController.requestPermissions(anyArray(), any(), any(), any())).thenThrow(expectedException)
         controller.getUserLocation()
             .test()
             .assertError { it == expectedException }
@@ -44,7 +48,7 @@ class LandingControllerTest {
 
     @Test
     fun `Location permissions denied - ask location - get Exception`() {
-        whenever(permissionsWrapper.requestPermissions(anyArray(), any(), any(), any())).thenReturn(Single.just(false))
+        whenever(permissionsController.requestPermissions(anyArray(), any(), any(), any())).thenReturn(Single.just(false))
         controller.getUserLocation()
             .test()
             .assertError(UnknownException::class.java)
@@ -53,7 +57,7 @@ class LandingControllerTest {
     @Test(expected = Throwable::class)
     fun `Location permissions granted - ask location with no provider - get Exception`() {
         val expectedException = Throwable()
-        whenever(permissionsWrapper.requestPermissions(anyArray(), any(), any(), any())).thenReturn(Single.just(true))
+        whenever(permissionsController.requestPermissions(anyArray(), any(), any(), any())).thenReturn(Single.just(true))
         whenever(locationProvider.getLocation()).thenThrow(expectedException)
         controller.getUserLocation()
             .test()
@@ -63,7 +67,7 @@ class LandingControllerTest {
     @Test
     fun `Location permissions granted - ask location with provider - get Location`() {
         val expectedLocation = Location(0.0, 0.0)
-        whenever(permissionsWrapper.requestPermissions(anyArray(), any(), any(), any())).thenReturn(Single.just(true))
+        whenever(permissionsController.requestPermissions(anyArray(), any(), any(), any())).thenReturn(Single.just(true))
         whenever(locationProvider.getLocation()).thenReturn(Single.just(expectedLocation))
         controller.getUserLocation()
             .test()

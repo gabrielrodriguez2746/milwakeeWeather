@@ -1,4 +1,4 @@
-package com.milwaukee.weather.base.permissions
+package com.milwaukee.weather.permissions.exceptions
 
 class CompleteDeniedPermissionsException : Throwable()
 

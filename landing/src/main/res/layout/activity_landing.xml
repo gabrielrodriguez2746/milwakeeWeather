@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.milwaukee.weather.landing.LandingViewModel" />
+            type="com.milwaukee.weather.landing.viewModels.LandingViewModel" />
 
     </data>
 

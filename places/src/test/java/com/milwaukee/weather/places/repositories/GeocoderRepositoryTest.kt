@@ -1,12 +1,12 @@
 package com.milwaukee.weather.places.repositories
 
 import com.google.gson.JsonArray
-import com.google.gson.JsonElement
 import com.google.gson.JsonObject
-import com.milwaukee.weather.base.mappers.BaseMapper
 import com.milwaukee.weather.base.model.Location
 import com.milwaukee.weather.base.places.models.SinglePlace
 import com.milwaukee.weather.basetest.readJsonFile
+import com.milwaukee.weather.places.mappers.base.GeocoderMapper
+import com.milwaukee.weather.places.mappers.base.LocationMapper
 import com.milwaukee.weather.places.rest.GeocodeService
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.whenever
@@ -23,10 +23,10 @@ import org.mockito.junit.MockitoJUnitRunner
 class GeocoderRepositoryTest {
 
     @Mock
-    lateinit var mapper: BaseMapper<JsonElement, SinglePlace>
+    lateinit var mapper: GeocoderMapper
 
     @Mock
-    lateinit var locationMapper: BaseMapper<Location, String>
+    lateinit var locationMapper: LocationMapper
 
     @Mock
     lateinit var service: GeocodeService

@@ -1,4 +1,4 @@
-package com.milwaukee.weather.landing
+package com.milwaukee.weather.landing.viewModels
 
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver

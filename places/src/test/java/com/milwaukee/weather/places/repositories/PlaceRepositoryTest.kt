@@ -1,11 +1,10 @@
 package com.milwaukee.weather.places.repositories
 
 import com.google.gson.JsonArray
-import com.google.gson.JsonElement
 import com.google.gson.JsonObject
-import com.milwaukee.weather.base.mappers.BaseMapper
 import com.milwaukee.weather.base.places.models.Place
 import com.milwaukee.weather.basetest.readJsonFile
+import com.milwaukee.weather.places.mappers.base.PlaceMapper
 import com.milwaukee.weather.places.rest.AutocompleteService
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.eq
@@ -22,7 +21,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class PlaceRepositoryTest {
 
     @Mock
-    lateinit var mapper: BaseMapper<JsonElement, Place>
+    lateinit var mapper: PlaceMapper
 
     @Mock
     lateinit var service: AutocompleteService

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="permissions.rationale_skip">Skip</string>
+    <string name="permissions.rationale_accept">Accept</string>
+
+    <string name="permissions.app_settings">Application permissions</string>
+    <string name="permissions.settings">You have to manually enable the permissions to use this function</string>
+
+</resources>

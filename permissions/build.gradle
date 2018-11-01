@@ -13,7 +13,6 @@ android {
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
     }
-
 }
 
 dependencies {
@@ -30,15 +29,13 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$rootProject.ext.daggerVersion"
 
+    // Support Libraries
+    implementation "com.android.support:appcompat-v7:$rootProject.ext.supportVersion"
+
     // Network
     implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.retrofitVersion"
     implementation "com.google.code.gson:gson:$rootProject.ext.gsonVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.okhttpVersion"
-
-    // Testing
-    testImplementation "junit:junit:$rootProject.ext.jUnitVersion"
-    testImplementation "org.mockito:mockito-core:$rootProject.ext.mockitoVersion"
-    testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$rootProject.ext.mockitoKotlinVersion"
 
 }
