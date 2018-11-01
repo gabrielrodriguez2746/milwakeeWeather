@@ -8,7 +8,7 @@ import io.reactivex.Single
 /**
  * This a request permissions wrapper to manage it form controller classes
  */
-interface ActivityPermissionWrapper : ActivityCompat.OnRequestPermissionsResultCallback {
+interface PermissionWrapper : ActivityCompat.OnRequestPermissionsResultCallback {
 
     /**
      * Allow to set the activity bind to the permissions request

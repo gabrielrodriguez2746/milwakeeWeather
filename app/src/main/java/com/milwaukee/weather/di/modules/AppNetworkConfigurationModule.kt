@@ -1,12 +1,13 @@
 package com.milwaukee.weather.di.modules
 
 import com.milwaukee.weather.base.di.MilwaukeeWeatherApiKey
+import com.milwaukee.weather.base.di.MilwaukeeWeatherBaseUrl
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 
 @Module
-object NetworkConfigurationModule {
+object AppNetworkConfigurationModule {
 
     private const val API_KEY = "7c3280069fd3897156c39459f4b830d2"
     private const val BASE_URL = "api.openweathermap.org/data/2.5/"
@@ -20,7 +21,7 @@ object NetworkConfigurationModule {
     @Provides
     @JvmStatic
     @Reusable
-    @MilwaukeeWeatherApiKey
+    @MilwaukeeWeatherBaseUrl
     fun provideWeatherApiBaseUrl() = BASE_URL
 
 }

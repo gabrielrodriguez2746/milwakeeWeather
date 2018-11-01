@@ -53,4 +53,9 @@ dependencies {
     implementation "android.arch.persistence.room:rxjava2:$rootProject.ext.roomVersion"
     kapt "android.arch.persistence.room:compiler:$rootProject.ext.roomVersion"
 
+    // Testing
+    testImplementation "junit:junit:$rootProject.ext.jUnitVersion"
+    testImplementation "org.mockito:mockito-core:$rootProject.ext.mockitoVersion"
+    testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$rootProject.ext.mockitoKotlinVersion"
+
 }

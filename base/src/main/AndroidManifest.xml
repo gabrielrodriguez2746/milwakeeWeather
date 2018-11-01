@@ -1,3 +1,4 @@
 <manifest package="com.milwaukee.weather.base">
-    <application/>
+
+    <application />
 </manifest>

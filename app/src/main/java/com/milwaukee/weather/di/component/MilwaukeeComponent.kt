@@ -4,6 +4,7 @@ import com.milwaukee.weather.base.InjectableApplication
 import com.milwaukee.weather.base.di.components.BaseComponent
 import com.milwaukee.weather.base.di.modules.AppModule
 import com.milwaukee.weather.di.modules.ActivitiesModule
+import com.milwaukee.weather.di.modules.AppConfigurationModule
 import com.milwaukee.weather.di.modules.ControllersModule
 import com.milwaukee.weather.di.modules.NetworkModule
 import dagger.BindsInstance
@@ -18,6 +19,7 @@ import javax.inject.Singleton
         ActivitiesModule::class,
         ControllersModule::class,
         NetworkModule::class,
+        AppConfigurationModule::class,
         AppModule::class
     ]
 )

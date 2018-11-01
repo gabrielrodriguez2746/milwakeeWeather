@@ -3,8 +3,8 @@ package com.milwaukee.weather.landing.activities
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.milwaukee.weather.base.permissions.ActivityPermissionWrapper
-import com.milwaukee.weather.base.permissions.MilwaukeeActivityPermissionWrapper
+import com.milwaukee.weather.base.permissions.PermissionWrapper
+import com.milwaukee.weather.base.permissions.MilwaukeePermissionWrapper
 import com.milwaukee.weather.landing.LandingViewModel
 import com.milwaukee.weather.landing.R
 import com.milwaukee.weather.landing.databinding.ActivityLandingBinding
@@ -12,7 +12,7 @@ import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 @Suppress("DELEGATED_MEMBER_HIDES_SUPERTYPE_OVERRIDE")
-class LandingActivity : AppCompatActivity(), ActivityPermissionWrapper by MilwaukeeActivityPermissionWrapper() {
+class LandingActivity : AppCompatActivity(), PermissionWrapper by MilwaukeePermissionWrapper() {
 
     @Inject
     lateinit var viewModel: LandingViewModel

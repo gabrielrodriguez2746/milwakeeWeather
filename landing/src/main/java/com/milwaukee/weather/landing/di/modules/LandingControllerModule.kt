@@ -1,7 +1,7 @@
 package com.milwaukee.weather.landing.di.modules
 
 import com.milwaukee.weather.base.di.scopes.ActivityScope
-import com.milwaukee.weather.base.permissions.ActivityPermissionWrapper
+import com.milwaukee.weather.base.permissions.PermissionWrapper
 import com.milwaukee.weather.landing.activities.LandingActivity
 import com.milwaukee.weather.landing.controllers.LandingController
 import com.milwaukee.weather.landing.controllers.MilwaukeeLandingController
@@ -21,7 +21,7 @@ abstract class LandingControllerModule {
         @Provides
         @JvmStatic
         @ActivityScope
-        fun provideActivityPermissionsWrapper(activity: LandingActivity) : ActivityPermissionWrapper {
+        fun provideActivityPermissionsWrapper(activity: LandingActivity) : PermissionWrapper {
             return activity.apply { initValues(activity) }
         }
 

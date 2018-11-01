@@ -6,7 +6,9 @@ import com.milwaukee.weather.base.di.MilwaukeeWeatherApiKey
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
+import dagger.multibindings.IntoMap
 import dagger.multibindings.IntoSet
+import dagger.multibindings.StringKey
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.Request
@@ -14,6 +16,12 @@ import okhttp3.logging.HttpLoggingInterceptor
 
 @Module
 object HttpInterceptorModule {
+
+    const val APP_LOG_INTERCEPTOR = "APP_LOG_INTERCEPTOR"
+    private const val HEADERS_INTERCEPTOR = "HEADERS_INTERCEPTOR"
+    private const val KEY_INTERCEPTOR = "KEY_INTERCEPTOR"
+
+    val appNetworkKeys = setOf(APP_LOG_INTERCEPTOR, HEADERS_INTERCEPTOR, KEY_INTERCEPTOR)
 
     private const val ACCEPT = "Accept"
     private const val CONTENT_TYPE = "Content-Type"
@@ -24,7 +32,8 @@ object HttpInterceptorModule {
     @Provides
     @JvmStatic
     @Reusable
-    @IntoSet
+    @IntoMap
+    @StringKey(APP_LOG_INTERCEPTOR)
     fun provideServiceLogInterceptor(configuration: BaseConfiguration): Interceptor {
         return HttpLoggingInterceptor { message -> Log.i(SERVER, message) }
             .applyLoggingInterceptorLogs(configuration.areAppLogsEnable())
@@ -33,7 +42,8 @@ object HttpInterceptorModule {
     @Provides
     @JvmStatic
     @Reusable
-    @IntoSet
+    @IntoMap
+    @StringKey(HEADERS_INTERCEPTOR)
     fun provideHeadersInterceptor(): Interceptor {
         return Interceptor { chain ->
             val requestBuilder = chain.request().newBuilder()
@@ -49,8 +59,9 @@ object HttpInterceptorModule {
     @Provides
     @JvmStatic
     @Reusable
-    @IntoSet
-    fun getMapsQueryInterceptor(@MilwaukeeWeatherApiKey apiKey: String): Interceptor {
+    @IntoMap
+    @StringKey(KEY_INTERCEPTOR)
+    fun povideKeyInterceptor(@MilwaukeeWeatherApiKey apiKey: String): Interceptor {
         return Interceptor {
             it.proceed(it.request().getNewRequest(apiKey))
         }

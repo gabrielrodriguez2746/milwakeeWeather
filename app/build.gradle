@@ -48,6 +48,7 @@ dependencies {
     implementation project(':base')
     implementation project(':location')
     implementation project(':landing')
+    implementation project(':places')
 
     // RxJava
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxJavaVersion"

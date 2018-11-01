@@ -1,11 +1,10 @@
-package com.milwaukee.weather.landing
+package com.milwaukee.weather.landing.controllers
 
 import com.milwaukee.weather.base.location.LocationProvider
 import com.milwaukee.weather.base.model.Location
-import com.milwaukee.weather.base.permissions.ActivityPermissionWrapper
+import com.milwaukee.weather.base.permissions.PermissionWrapper
 import com.milwaukee.weather.base.permissions.CompleteDeniedPermissionsException
 import com.milwaukee.weather.base.permissions.UnknownException
-import com.milwaukee.weather.landing.controllers.MilwaukeeLandingController
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.anyArray
 import com.nhaarman.mockito_kotlin.whenever
@@ -21,7 +20,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class LandingControllerTest {
 
     @Mock
-    private lateinit var permissionsWrapper: ActivityPermissionWrapper
+    private lateinit var permissionsWrapper: PermissionWrapper
 
     @Mock
     private lateinit var locationProvider: LocationProvider

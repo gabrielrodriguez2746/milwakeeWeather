@@ -10,6 +10,9 @@ ext {
     // Kotlin
     kotlin_version = '1.2.71'
 
+    // Milwaukee internal
+    milwaukeeBaseTestVersion = "1.0@aar"
+
     // Dagger
     daggerVersion = '2.16'
     daggerAndroidVersion = '2.16'

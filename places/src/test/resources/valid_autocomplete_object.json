@@ -1,0 +1,13 @@
+{
+  "place_id": "ChIJcWGw3Ytzj1QR7Ui7HnTz6Dg",
+  "structured_formatting": {
+    "main_text": "Victoria",
+    "main_text_matched_substrings": [
+      {
+        "length": 4,
+        "offset": 0
+      }
+    ],
+    "secondary_text": "BC, Canada"
+  }
+}
