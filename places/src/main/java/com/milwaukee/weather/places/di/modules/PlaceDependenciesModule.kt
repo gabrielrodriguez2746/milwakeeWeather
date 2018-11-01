@@ -24,7 +24,7 @@ object PlaceDependenciesModule {
     @QueryTypes
     @Reusable
     fun getQueryTypes(): String {
-        return "types:(cities)"
+        return "types:(regions)"
     }
 
 }

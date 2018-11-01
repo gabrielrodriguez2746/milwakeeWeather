@@ -1,0 +1,12 @@
+{
+  "weather": [
+    {
+      "description": "nubes",
+      "icon": "04d"
+    }
+  ],
+  "main": {
+    "temp": 268.727
+  },
+  "id": 8145969
+}

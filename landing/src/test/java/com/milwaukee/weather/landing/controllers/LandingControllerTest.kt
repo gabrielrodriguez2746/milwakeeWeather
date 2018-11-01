@@ -3,6 +3,7 @@ package com.milwaukee.weather.landing.controllers
 import com.milwaukee.weather.base.location.LocationController
 import com.milwaukee.weather.base.model.Location
 import com.milwaukee.weather.base.places.controllers.PlaceController
+import com.milwaukee.weather.base.weather.controllers.WeatherController
 import com.milwaukee.weather.permissions.controllers.base.PermissionController
 import com.milwaukee.weather.permissions.exceptions.CompleteDeniedPermissionsException
 import com.milwaukee.weather.permissions.exceptions.UnknownException
@@ -29,12 +30,15 @@ class LandingControllerTest {
     @Mock
     private lateinit var placeController: PlaceController
 
+    @Mock
+    private lateinit var weatherController: WeatherController
+
     private lateinit var controller: MilwaukeeLandingController
 
     @Before
     fun setupController() {
         MockitoAnnotations.initMocks(this)
-        controller = MilwaukeeLandingController(permissionsController, locationProvider, placeController)
+        controller = MilwaukeeLandingController(permissionsController, locationProvider, placeController, weatherController)
     }
 
     @Test(expected = CompleteDeniedPermissionsException::class)

@@ -15,21 +15,21 @@ object PlacesApiModule {
     @Provides
     @Reusable
     @JvmStatic
-    fun getPlacesService(@PlaceService retrofit: Retrofit): AutocompleteService {
+    fun providePlacesService(@PlaceService retrofit: Retrofit): AutocompleteService {
         return retrofit.create(AutocompleteService::class.java)
     }
 
     @Provides
     @Reusable
     @JvmStatic
-    fun getPlacesDetailService(@PlaceService retrofit: Retrofit): PlaceDetailService {
+    fun providePlacesDetailService(@PlaceService retrofit: Retrofit): PlaceDetailService {
         return retrofit.create(PlaceDetailService::class.java)
     }
 
     @Provides
     @Reusable
     @JvmStatic
-    fun getPlacesGeocodeService(@PlaceService retrofit: Retrofit): GeocodeService {
+    fun providePlacesGeocodeService(@PlaceService retrofit: Retrofit): GeocodeService {
         return retrofit.create(GeocodeService::class.java)
     }
 }

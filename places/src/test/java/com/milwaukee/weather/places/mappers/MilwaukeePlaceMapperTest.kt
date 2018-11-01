@@ -10,7 +10,7 @@ class MilwaukeePlaceMapperTest {
     private lateinit var mapper: MilwaukeePlaceMapper
 
     @Before
-    fun setupFormatter() {
+    fun setupMapper() {
         mapper = MilwaukeePlaceMapper()
     }
 

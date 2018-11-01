@@ -16,7 +16,7 @@ class MilwaukeeLocationMapperTest {
     private lateinit var mapper: MilwaukeeLocationMapper
 
     @Before
-    fun setupFormatter() {
+    fun setupMapper() {
         MockitoAnnotations.initMocks(this)
         mapper = MilwaukeeLocationMapper(formatter)
     }

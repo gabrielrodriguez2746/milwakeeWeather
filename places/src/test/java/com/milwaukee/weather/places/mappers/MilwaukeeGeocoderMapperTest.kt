@@ -10,7 +10,7 @@ class MilwaukeeGeocoderMapperTest {
     private lateinit var mapper: MilwaukeeGeocoderMapper
 
     @Before
-    fun setupFormatter() {
+    fun setupMapper() {
         mapper = MilwaukeeGeocoderMapper()
     }
 

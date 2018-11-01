@@ -3,30 +3,24 @@ package com.milwaukee.weather.landing.controllers
 import android.Manifest
 import com.milwaukee.weather.base.location.LocationController
 import com.milwaukee.weather.base.model.Location
-import com.milwaukee.weather.permissions.exceptions.UnknownException
 import com.milwaukee.weather.base.places.controllers.PlaceController
+import com.milwaukee.weather.base.weather.controllers.WeatherController
 import com.milwaukee.weather.landing.R
 import com.milwaukee.weather.permissions.controllers.base.PermissionController
+import com.milwaukee.weather.permissions.exceptions.UnknownException
 import io.reactivex.Single
 import javax.inject.Inject
 
 class MilwaukeeLandingController @Inject constructor(
     private val permissionsWrapper: PermissionController,
     private val locationProvider: LocationController,
-    private val placeController: PlaceController
-) : LandingController {
+    private val placeController: PlaceController,
+    private val weatherController: WeatherController
+) : LandingController, PlaceController by placeController, WeatherController by weatherController {
 
     override fun getUserLocation(): Single<Location> {
         return requestLocationPermissions()
             .flatMap(::flatMapLocationBaseOnPermissions)
-    }
-
-    override fun searchSuggestionByQuery(query: String): Single<Unit> {
-        return Single.just(Unit)
-    }
-
-    override fun searchWeatherByLocation(location: Location): Single<Unit> {
-        return Single.just(Unit)
     }
 
     private fun flatMapLocationBaseOnPermissions(hasPermissions: Boolean): Single<Location> {
