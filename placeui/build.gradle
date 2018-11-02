@@ -10,7 +10,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.1.1"
+        versionName "1.0"
         vectorDrawables.useSupportLibrary = true
     }
 
@@ -19,11 +19,13 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation "com.milwaukee:baseui:$milwaukeeBaseUiVersion"
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.ext.kotlin_version"
 
     // Support Libraries
     implementation "com.android.support:appcompat-v7:$rootProject.ext.supportVersion"
     implementation "com.android.support:design:$rootProject.ext.supportVersion"
-    implementation "com.android.support:recyclerview-v7:$rootProject.ext.supportVersion"
+    implementation "com.android.support.constraint:constraint-layout:$rootProject.ext.constraintLayoutVersion"
 
 }

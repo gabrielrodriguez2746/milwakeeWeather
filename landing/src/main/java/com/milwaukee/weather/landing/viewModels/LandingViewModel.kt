@@ -120,7 +120,10 @@ class LandingViewModel @Inject constructor(
     private fun subscribeToEndButton() {
         actionsDisposable += itemsClickedSubject.hide()
             .filter { it == R.id.imageView_end && searchEnable.get() && showEndIcon.get() }
-            .doOnNext { querySearched.set("") }
+            .doOnNext {
+                querySearched.set("")
+                places.set(emptyList())
+            }
             .applySchedulers()
             .subscribe { showEndIcon.set(false) }
     }
@@ -130,22 +133,17 @@ class LandingViewModel @Inject constructor(
             .map { it.trim() }
             .observeOn(Schedulers.computation())
             .debounce(300, TimeUnit.MILLISECONDS)
-            .filter { it.isNotBlank() }
+            .filter { searchEnable.get() && it.isNotBlank() }
             .distinctUntilChanged()
     }
 
     private fun processQueryRequest(query: String) {
-        actionsDisposable += createSingleRequest(query)
+        actionsDisposable += controller.getPlacesAutocomplete(query)
             .applySchedulers()
-            .subscribe({}, Throwable::printStackTrace)
+            .subscribe(places::set, Throwable::printStackTrace)
     }
 
-    private fun createSingleRequest(query: String): Single<List<Place>> {
-        return controller.getPlacesAutocomplete(query)
-
-    }
-
-    private fun processPLaceFromLocation(location: Location): Single<Pair<SinglePlace, SingleWeather>>? {
+    private fun processPLaceFromLocation(location: Location): Single<Pair<SinglePlace, SingleWeather>> {
         return Single.zip(controller.getPlaceDataByCoordinates(location).applySchedulers()
             .doOnSuccess {
                 with(it.text) {

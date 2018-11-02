@@ -3,5 +3,6 @@
 
     <color name="grayBackground">#f8f9fb</color>
     <color name="grayNavigationBar">#E6E6E6</color>
+    <color name="gray600">#e6e6e6</color>
 
 </resources>

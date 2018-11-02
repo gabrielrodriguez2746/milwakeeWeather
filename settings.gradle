@@ -1,1 +1,1 @@
-include ':app', ':base', ':location', ':landing', ':places', ':basetest', ':permissions', ':weather', ':baseui'
+include ':app', ':base', ':location', ':landing', ':places', ':basetest', ':permissions', ':weather', ':baseui', ':placeui'
