@@ -1,6 +1,8 @@
 package com.milwaukee.weather.places.controllers
 
 import com.milwaukee.weather.base.model.Location
+import com.milwaukee.weather.base.places.GeocoderResultTypes
+import com.milwaukee.weather.base.places.QueryTypes
 import com.milwaukee.weather.base.places.controllers.PlaceController
 import com.milwaukee.weather.base.places.models.Place
 import com.milwaukee.weather.base.places.models.SinglePlace
@@ -14,12 +16,13 @@ import javax.inject.Inject
 class MilwaukeePlaceController @Inject constructor(
     private val placeRepository: PlaceRepository,
     private val detailRepository: DetailRepository,
-    private val geocodeRepository: GeocodeRepository
+    private val geocodeRepository: GeocodeRepository,
+    @QueryTypes private val types: String,
+    @GeocoderResultTypes private val resultsType: String
 ) : PlaceController {
 
     override fun getPlacesAutocomplete(
-        query: String,
-        types: String?
+        query: String
     ): Single<List<Place>> {
         return placeRepository.getPlacesFromQuery(query, types)
             .observeOn(Schedulers.io())
@@ -31,7 +34,7 @@ class MilwaukeePlaceController @Inject constructor(
     }
 
     override fun getPlaceDataByCoordinates(location: Location): Single<SinglePlace> {
-        return geocodeRepository.getPlaceFromCoordinates(location)
+        return geocodeRepository.getPlaceFromCoordinates(location, resultsType)
     }
 
 

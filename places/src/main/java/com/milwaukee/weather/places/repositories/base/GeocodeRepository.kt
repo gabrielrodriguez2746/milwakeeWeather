@@ -12,7 +12,8 @@ interface GeocodeRepository {
     /**
      * Get place from coordinates
      * @param location coordinates from place
+     * @param resultTypes types for results
      * @return [SinglePlace] mapped from search
      */
-    fun getPlaceFromCoordinates(location: Location): Single<SinglePlace>
+    fun getPlaceFromCoordinates(location: Location, resultTypes: String?): Single<SinglePlace>
 }

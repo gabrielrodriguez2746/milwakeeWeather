@@ -45,11 +45,12 @@ android {
 dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':base')
     implementation project(':location')
     implementation project(':landing')
     implementation project(':places')
     implementation project(':weather')
+    implementation project(':base')
+    implementation "com.milwaukee:baseui:$milwaukeeBaseUiVersion"
 
     // RxJava
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxJavaVersion"

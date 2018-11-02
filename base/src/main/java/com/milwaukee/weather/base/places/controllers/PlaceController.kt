@@ -14,8 +14,7 @@ interface PlaceController {
      * Get place list base on query searched
      * @return Single with a list of matched places
      */
-    fun getPlacesAutocomplete(query: String,
-                              types: String?): Single<List<Place>>
+    fun getPlacesAutocomplete(query: String): Single<List<Place>>
 
     /**
      * Get location coordinates base

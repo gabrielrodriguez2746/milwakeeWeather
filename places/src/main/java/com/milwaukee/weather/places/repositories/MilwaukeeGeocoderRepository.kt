@@ -17,11 +17,11 @@ class MilwaukeeGeocoderRepository @Inject constructor(
 
     private val cacheData = HashMap<String, SinglePlace>()
 
-    override fun getPlaceFromCoordinates(location: Location): Single<SinglePlace> {
+    override fun getPlaceFromCoordinates(location: Location, resultTypes: String?): Single<SinglePlace> {
         val key = locationMapper.getFromElement(location)
         return cacheData[key]?.let {
             Single.just(it)
-        } ?: service.getGeocodePlace(key)
+        } ?: service.getGeocodePlace(key, resultTypes)
             .map { mapper.getFromElement(it.getAsJsonArray("results").first()) }
             .doOnSuccess { cacheData[key] = it }
     }

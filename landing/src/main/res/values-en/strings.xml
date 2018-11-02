@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="landing.permission_message">If you want to get weather data for your current location, turn on location permissions from your settings</string>
+    <string name="landing.search_hint">Search city or postal code</string>
+</resources>

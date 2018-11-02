@@ -4,6 +4,8 @@
     <application>
         <activity
             android:name=".activities.LandingActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Landing" />
+
     </application>
 </manifest>

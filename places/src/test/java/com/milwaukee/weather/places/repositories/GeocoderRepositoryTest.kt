@@ -9,6 +9,7 @@ import com.milwaukee.weather.places.mappers.base.GeocoderMapper
 import com.milwaukee.weather.places.mappers.base.LocationMapper
 import com.milwaukee.weather.places.rest.GeocodeService
 import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Single
 import org.junit.Before
@@ -35,18 +36,21 @@ class GeocoderRepositoryTest {
 
     lateinit var mockedLocation: Location
 
+    lateinit var resultTypes: String
+
     @Before
     fun setUpRepository() {
         MockitoAnnotations.initMocks(this)
         mockedLocation = Location(0.0, 0.0)
+        resultTypes = ""
         repository = MilwaukeeGeocoderRepository(mapper, locationMapper, service)
     }
 
     @Test
     fun `malformed service response - ask for place - get Error`() {
-        whenever(service.getGeocodePlace(anyString())).thenReturn(Single.just(JsonObject()))
+        whenever(service.getGeocodePlace(anyString(), eq(resultTypes))).thenReturn(Single.just(JsonObject()))
         whenever(locationMapper.getFromElement(mockedLocation)).thenReturn("")
-        repository.getPlaceFromCoordinates(mockedLocation)
+        repository.getPlaceFromCoordinates(mockedLocation, resultTypes)
             .test()
             .assertError(Throwable::class.java)
     }
@@ -58,10 +62,10 @@ class GeocoderRepositoryTest {
         mockedServiceResponse.add("results", JsonArray().apply {
             add(readJsonFile(RESULTS))
         })
-        whenever(service.getGeocodePlace(anyString())).thenReturn(Single.just(mockedServiceResponse))
+        whenever(service.getGeocodePlace(anyString(), eq(resultTypes))).thenReturn(Single.just(mockedServiceResponse))
         whenever(locationMapper.getFromElement(mockedLocation)).thenReturn("")
         whenever(mapper.getFromElement(any())).thenReturn(expectedValue)
-        repository.getPlaceFromCoordinates(mockedLocation)
+        repository.getPlaceFromCoordinates(mockedLocation, resultTypes)
             .test()
             .assertValue { it == expectedValue }
     }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme.Landing">
+        <item name="android:windowBackground">@color/grayBackground</item>
+        <item name="android:colorPrimaryDark">@color/grayNavigationBar</item>
+        <item name="colorAccent">@color/grayNavigationBar</item>
+    </style>
+
+</resources>

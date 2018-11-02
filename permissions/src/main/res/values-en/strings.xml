@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="permissions.rationale_skip">No, gracias</string>
+    <string name="permissions.rationale_accept">Aceptar</string>
+
+    <string name="permissions.app_settings">Permisos de aplicación</string>
+    <string name="permissions.settings">Debes activar manualmente los permisos para usar esta función</string>
+
+</resources>

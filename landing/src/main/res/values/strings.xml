@@ -1,3 +1,4 @@
 <resources>
-    <string name="landing.permission_message">Milwaukee Weather</string>
+    <string name="landing.permission_message">Si quieres obtener datos del clima de tu ubicación actual, habilita los permisos de ubicación desde la configuración</string>
+    <string name="landing.search_hint">Buscar ciudad o código postal</string>
 </resources>

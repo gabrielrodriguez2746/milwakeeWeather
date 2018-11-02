@@ -8,6 +8,7 @@ import retrofit2.http.Query
 interface GeocodeService {
 
     @GET("geocode/json")
-    fun getGeocodePlace(@Query("latlng") location: String): Single<JsonObject>
+    fun getGeocodePlace(@Query("latlng") location: String,
+                        @Query("result_type") resultType: String?): Single<JsonObject>
 
 }

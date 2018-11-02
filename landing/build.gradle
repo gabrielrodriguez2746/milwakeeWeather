@@ -22,6 +22,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':base')
+    implementation "com.milwaukee:baseui:$milwaukeeBaseUiVersion"
     api "com.milwaukee:permissions:$milwaukeePermissionsVersion"
 
     // RxJava

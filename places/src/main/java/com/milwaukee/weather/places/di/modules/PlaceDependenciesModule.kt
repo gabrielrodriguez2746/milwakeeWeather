@@ -1,5 +1,6 @@
 package com.milwaukee.weather.places.di.modules
 
+import com.milwaukee.weather.base.places.GeocoderResultTypes
 import com.milwaukee.weather.base.places.QueryTypes
 import dagger.Module
 import dagger.Provides
@@ -24,7 +25,15 @@ object PlaceDependenciesModule {
     @QueryTypes
     @Reusable
     fun getQueryTypes(): String {
-        return "types:(regions)"
+        return "(regions)"
+    }
+
+    @Provides
+    @JvmStatic
+    @GeocoderResultTypes
+    @Reusable
+    fun getGeocoderResultTypes(): String {
+        return "locality"
     }
 
 }

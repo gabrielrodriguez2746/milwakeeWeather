@@ -9,6 +9,7 @@ import com.milwaukee.weather.landing.R
 import com.milwaukee.weather.permissions.controllers.base.PermissionController
 import com.milwaukee.weather.permissions.exceptions.UnknownException
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
 class MilwaukeeLandingController @Inject constructor(
@@ -33,7 +34,7 @@ class MilwaukeeLandingController @Inject constructor(
 
     private fun requestLocationPermissions(): Single<Boolean> {
         return permissionsWrapper.requestPermissions(
-            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), R.string.landing_permission_message,
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), R.string.landing_permission_title,
             R.string.landing_permission_message, 1
         )
     }

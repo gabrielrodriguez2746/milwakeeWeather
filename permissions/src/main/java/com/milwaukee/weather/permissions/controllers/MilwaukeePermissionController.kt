@@ -58,6 +58,8 @@ class MilwaukeePermissionController : PermissionController {
                         }, { startSettingsIntent() }).show()
                 }
             }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
     }
 
     private fun startSettingsIntent() {
@@ -74,23 +76,8 @@ class MilwaukeePermissionController : PermissionController {
         requestCode: Int
     ): Consumer<Disposable> {
         return Consumer {
-            if (permissions.shouldShowRequestPermissionRationale(activity)) {
-                provideAlertDialogFromParameters(title, messageRationale,
-                    { dialogInterface ->
-                        dialogInterface.dismiss()
-                        val result =
-                            permissions.map { permission ->
-                                PermissionResult(
-                                    permission,
-                                    PermissionState.DENIED
-                                )
-                            }
-                        permissionSubject.onNext(Pair(requestCode, result))
-                    }, {
-                        ActivityCompat.requestPermissions(activity, permissions, requestCode)
-                    }).show()
-            } else {
-                ActivityCompat.requestPermissions(activity, permissions, requestCode)
+            activity.runOnUiThread {
+                manageConsumerPermissions(permissions, title, messageRationale, requestCode)
             }
         }
     }
@@ -101,7 +88,7 @@ class MilwaukeePermissionController : PermissionController {
         negativeButtonAction: (dialogInterface: DialogInterface) -> Unit,
         positiveButtonAction: () -> Unit
     ): AlertDialog.Builder {
-        return AlertDialog.Builder(activity).apply {
+        return AlertDialog.Builder(activity, R.style.AlertDialogLight).apply {
             setTitle(title)
             setMessage(messageRationale)
             setCancelable(false)
@@ -140,6 +127,33 @@ class MilwaukeePermissionController : PermissionController {
                     ).permissionToState()
                 }
             )
+        }
+    }
+
+    private fun manageConsumerPermissions(
+        permissions: Array<String>,
+        title: Int,
+        messageRationale: Int,
+        requestCode: Int
+    ) {
+        if (permissions.shouldShowRequestPermissionRationale(activity)) {
+            provideAlertDialogFromParameters(
+                title, messageRationale,
+                { dialogInterface ->
+                    dialogInterface.dismiss()
+                    val result =
+                        permissions.map { permission ->
+                            PermissionResult(
+                                permission,
+                                PermissionState.DENIED
+                            )
+                        }
+                    permissionSubject.onNext(Pair(requestCode, result))
+                }, {
+                    ActivityCompat.requestPermissions(activity, permissions, requestCode)
+                }).show()
+        } else {
+            ActivityCompat.requestPermissions(activity, permissions, requestCode)
         }
     }
 
