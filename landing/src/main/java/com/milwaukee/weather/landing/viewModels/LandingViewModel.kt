@@ -36,6 +36,7 @@ class LandingViewModel @Inject constructor(
     private var lastHighlightPlace = ""
 
     val itemsClickedSubject = PublishSubject.create<Int>()
+    val listItemsSubject = PublishSubject.create<String>()
 
     val hideKeyboardSubject = PublishSubject.create<Unit>()
 
@@ -68,6 +69,7 @@ class LandingViewModel @Inject constructor(
         subscribeToHideKeyBoard()
         subscribeToQueryChanges()
         subscribeToEndButton()
+        subscribeToListItemsSubject()
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
@@ -100,6 +102,7 @@ class LandingViewModel @Inject constructor(
 
     private fun subscribeToHideKeyBoard() {
         actionsDisposable += hideKeyboardSubject.hide()
+            .filter { searchEnable.get() && querySearched.get()?.isBlank() ?: true }
             .doOnNext {
                 searchEnable.set(false)
                 startDrawable.set(R.drawable.ic_menu)
@@ -141,6 +144,23 @@ class LandingViewModel @Inject constructor(
         actionsDisposable += controller.getPlacesAutocomplete(query)
             .applySchedulers()
             .subscribe(places::set, Throwable::printStackTrace)
+    }
+
+    private fun subscribeToListItemsSubject() {
+        actionsDisposable += listItemsSubject.hide()
+            .observeOn(Schedulers.computation())
+            .debounce(300, TimeUnit.MILLISECONDS)
+            .distinctUntilChanged()
+            .flatMapSingle(controller::getPlaceCoordinatesById)
+            .flatMapSingle(::processPLaceFromLocation)
+            .applySchedulers()
+            .subscribe({
+                searchEnable.set(false)
+                startDrawable.set(R.drawable.ic_menu)
+                endDrawable.set(R.drawable.ic_search)
+                queryHint.set("")
+                places.set(emptyList())
+            }, Throwable::printStackTrace)
     }
 
     private fun processPLaceFromLocation(location: Location): Single<Pair<SinglePlace, SingleWeather>> {

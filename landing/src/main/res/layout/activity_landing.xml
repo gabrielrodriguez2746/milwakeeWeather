@@ -53,6 +53,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
+                app:on_hide_keyboard="@{ true }"
+                app:on_listener="@{ viewModel.listItemsSubject }"
                 app:on_configure="@{ true }"
                 app:on_items="@{ viewModel.places }" />
 

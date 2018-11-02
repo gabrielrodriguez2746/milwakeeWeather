@@ -18,7 +18,7 @@ class GenericListAdapter<T : RecyclerItem<*>, S : RecyclerGenericView<*>>(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val view = holder.itemView as RecyclerGenericView<T>
         view.bind(getItem(position), position)
-        view.setListener { listener }
+        view.setListener { listener.invoke(it) }
     }
 
     override fun getItemViewType(position: Int): Int {

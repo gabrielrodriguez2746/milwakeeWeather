@@ -20,6 +20,7 @@ import com.milwaukee.waether.baseui.ViewFactory
 import com.milwaukee.weather.base.helpers.addRippleForeground
 import com.milwaukee.weather.base.helpers.removeForeground
 import com.milwaukee.weather.base.places.models.Place
+import com.milwaukee.weather.landing.R
 import com.milwaukee.weather.landing.widgets.DividerItemView
 import com.milwaukee.weather.landing.widgets.PlaceItemView
 import io.reactivex.subjects.PublishSubject
@@ -74,6 +75,8 @@ fun View.hideKeyBoardOnTouchListener(
             subject?.onNext(Unit)
             false
         }
+    } else {
+
     }
 }
 
@@ -86,6 +89,7 @@ fun RecyclerView.onConfigure(
         layoutManager = LinearLayoutManager(context)
         adapter = GenericListAdapter<RecyclerItem<*>, RecyclerGenericView<*>>({
             listener?.onNext(it)
+            hideKeyBoard()
         }, object : ViewFactory<RecyclerGenericView<*>>() {
             override fun getView(parent: ViewGroup, viewType: Int): RecyclerGenericView<*> {
                 return when (viewType) {
@@ -95,7 +99,13 @@ fun RecyclerView.onConfigure(
                         isFocusable = true
                         layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
                     }
-                    else -> DividerItemView(parent.context)
+                    else -> DividerItemView(parent.context).apply {
+                        val margin = parent.context.resources.getDimensionPixelSize(R.dimen.space_medium)
+                        with((layoutParams as ViewGroup.MarginLayoutParams)) {
+                            leftMargin = margin
+                            rightMargin = margin
+                        }
+                    }
                 }
             }
         })
@@ -115,7 +125,7 @@ fun RecyclerView.onItemsChange(
             override fun getContent(): Place = place
             override fun getId(): Int = place.id.hashCode()
         })
-        if(index != lastIndex) {
+        if (index != lastIndex) {
             items.add(object : RecyclerItem<Any> {
                 override fun getComparator(): Any = Any()
                 override fun getContent(): Any = Any()

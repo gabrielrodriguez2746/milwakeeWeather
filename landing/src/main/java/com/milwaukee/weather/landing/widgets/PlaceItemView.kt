@@ -30,7 +30,7 @@ class PlaceItemView @JvmOverloads constructor(
     }
 
     override fun setListener(listener: (String) -> Unit) {
-
+        setOnClickListener { listener.invoke(itemId) }
     }
 
 }
