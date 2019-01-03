@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply from: "$project.rootDir/script-signing.gradle"
+apply from: "$project.rootDir/tools/script-signing.gradle"
 apply from: "$project.rootDir/tools/app_versioning.gradle"
 
 android {
@@ -28,9 +28,7 @@ android {
         }
 
         release {
-            minifyEnabled true
             debuggable false
-            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
             buildConfigField "boolean", "SERVICE_LOGS_FLAG", "false"
