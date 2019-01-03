@@ -21,6 +21,93 @@ def getAppVersionFile() {
     return file(getAppVersionPath())
 }
 
+private String getCurrentBranch() {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', '--abbrev-ref', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
 private String getAppVersionPath() {
     return "$project.rootDir/tools/app_version_code.properties"
+}
+
+private Integer getVersionNameMinor() {
+    return (getVersionProps(getAppVersionFile())[TAG_VERSION_NAME] =~ /\d+/)[1].toInteger()
+}
+
+private Integer getVersionNameMajor() {
+    return (getVersionProps(getAppVersionFile())[TAG_VERSION_NAME] =~ /\d+/)[0].toInteger()
+}
+
+private static String getDate() {
+    return new Date().format("yyyyMMdd")
+}
+
+private void commitAndSetTag(String versionName, String versionCode) {
+    createCommitForVersion(versionName, versionCode, getAppVersionPath())
+    createTagForVersion(versionName)
+}
+
+private void createCommitForVersion(String versionName, String versionCode, String affectedFile) {
+    Process addChanges = ['git', 'add', affectedFile].execute(null, project.rootDir)
+    addChanges.waitForProcessOutput(System.out, System.err)
+
+    Process createCommit = ['git', 'commit', "-m :star: Release | ${versionName}. Code:${versionCode} | CD | Bitrise"].execute(null, project.rootDir)
+    createCommit.waitForProcessOutput(System.out, System.err)
+}
+
+private void pushChanges() {
+    def branchName = getCurrentBranch()
+    Process pushChanges = ['git', 'push', "origin", branchName].execute(null, project.rootDir)
+    pushChanges.waitForProcessOutput(System.out, System.err)
+}
+
+private void createTagForVersion(String versionName) {
+    Process createTag = ['git', 'tag', "v${versionName}".toString()].execute(null, project.rootDir)
+    createTag.waitForProcessOutput(System.out, System.err)
+}
+
+private void saveVersionChanges(String versionName, Integer versionCode) {
+    def versionProps = getVersionProps(getAppVersionFile())
+    versionProps[TAG_VERSION_NAME] = versionName
+    versionProps[TAG_VERSION_CODE] = versionCode.toString()
+    versionProps.store(getAppVersionFile().newWriter(), null)
+}
+
+private static String generateVersionName(Integer versionNameMajor,
+                                          Integer versionNameMinor,
+                                          String date,
+                                          Integer versionCode) {
+    String versionName = "${versionNameMajor}.${versionNameMinor}"
+    if (versionCode != null && date != null) {
+        versionName += ".${date}-${versionCode}"
+    } else if (versionCode != null) {
+        versionName += ".${versionCode}"
+    }
+    return versionName
+}
+
+private static Integer getBuildNumber() {
+    def buildNumber = System.getenv("BITRISE_BUILD_NUMBER")
+    if (buildNumber != null) {
+        buildNumber = buildNumber.toInteger()
+    } else {
+        buildNumber = 1
+    }
+    return buildNumber
+}
+
+task incrementVersionCode {
+    doLast {
+        def versionCode = getBuildNumber()
+        def versionNameMajor = getVersionNameMajor()
+        def versionNameMinor = getVersionNameMinor()
+        def versionName = generateVersionName(versionNameMajor, versionNameMinor, getDate(), versionCode)
+        saveVersionChanges(versionName, versionCode)
+        commitAndSetTag(versionName, versionCode.toString())
+        pushChanges()
+    }
 }
