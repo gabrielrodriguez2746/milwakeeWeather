@@ -11,7 +11,7 @@
 /build
 /captures
 .externalNativeBuild
-/app/src/main/res/values/api_keys.xml
+app/src/main/res/values/api_keys.xml
 
 /gradle.properties
 gradle.properties
