@@ -1,0 +1,62 @@
+import groovy.transform.Field
+
+@Field private String RELEASE_STORE_FILE = 'releaseStoreFile'
+@Field private String STORE_PASSWORD = 'storePassword'
+@Field private String KEY_ALIAS = 'keyAlias'
+@Field private String KEY_PASSWORD = 'keyPassword'
+
+def getConfigurationFile() {
+    return file("$project.rootDir/tools/signing.properties")
+}
+
+def getFileProps() {
+    def versionPropsFile = getConfigurationFile()
+    def versionProps = new Properties()
+    versionProps.load(new FileInputStream(versionPropsFile))
+    return versionProps
+}
+
+private String getReleaseStoreFile() {
+    return getFileProps()[RELEASE_STORE_FILE]
+}
+
+private String getStorePassword() {
+    return getFileProps()[STORE_PASSWORD]
+}
+
+private String getKeyAlias() {
+    return getFileProps()[KEY_ALIAS]
+}
+
+private String getKeyPassword() {
+    return getFileProps()[KEY_PASSWORD]
+}
+
+String releaseStoreFile = getReleaseStoreFile()
+String storePasswordValue = getStorePassword()
+String keyAliasValue = getKeyAlias()
+String keyPasswordValue = getKeyPassword()
+
+boolean validReleaseStoreFile = releaseStoreFile?.trim()
+
+android {
+    signingConfigs {
+        releaseConfig {
+            if (validReleaseStoreFile) {
+                storeFile file(releaseStoreFile)
+                storePassword storePasswordValue
+                keyAlias keyAliasValue
+                keyPassword keyPasswordValue
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            if (validReleaseStoreFile) {
+                signingConfig signingConfigs.releaseConfig
+            }
+        }
+    }
+}
+

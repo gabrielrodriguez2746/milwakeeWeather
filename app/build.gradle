@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply from: "$project.rootDir/script-signing.gradle"
 apply from: "$project.rootDir/tools/app_versioning.gradle"
 
 android {
