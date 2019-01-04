@@ -1,0 +1,120 @@
+# Java Gradle CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-java/ for more details
+#
+
+version: 2
+
+config_android: &config_android
+  docker:
+  - image: circleci/android:api-28-alpha
+  parallelism: 1
+  resource_class: xlarge
+  working_directory: ~/circlci
+  environment:
+    GRADLE_OPTS: "-Xmx14000m -Dorg.gradle.daemon=false"
+    JVM_OPTS: "-Xmx14000m"
+    TERM: dumb
+
+gen_cache_key: &gen_cache_key
+  run:
+    name: Generate cache key
+    command: |
+      sudo chmod +x checksum.sh
+      ./checksum.sh /tmp/checksum.txt
+restore_cache: &restore_cache
+  restore_cache:
+    key: gradle-{{ checksum "/tmp/checksum.txt" }}
+
+save_cache: &save_cache
+  save_cache:
+    paths:
+    - ~/.gradle/caches
+    - ~/.gradle/wrapper
+    key: gradle-{{ checksum "/tmp/checksum.txt" }}
+
+attach_workspace: &attach_workspace
+  attach_workspace:
+    at: ~/circlci
+
+jobs:
+
+  config_cache:
+    <<: *config_android
+    steps:
+    - checkout
+    - <<: *gen_cache_key
+    - <<: *restore_cache
+    - run:
+        name: Download Dependencies
+        command: ./gradlew androidDependencies
+    - <<: *save_cache
+
+  detekt:
+    <<: *config_android
+    steps:
+    - checkout
+    - <<: *gen_cache_key
+    - <<: *restore_cache
+    - run:
+        name: Run Detekt
+        command: ./gradlew detekt
+
+  ktlint:
+    <<: *config_android
+    steps:
+    - checkout
+    - <<: *attach_workspace
+    - <<: *gen_cache_key
+    - <<: *restore_cache
+    - run:
+        name: Run Ktlint
+        command: ./gradlew ktlint
+
+  android_lint:
+    <<: *config_android
+    steps:
+    - checkout
+    - <<: *attach_workspace
+    - <<: *gen_cache_key
+    - <<: *restore_cache
+    - run:
+        name: Run Android Lint
+        command: ./gradlew lintDebug
+
+  unit_tests:
+    <<: *config_android
+    steps:
+    - checkout
+    - <<: *attach_workspace
+    - <<: *gen_cache_key
+    - <<: *restore_cache
+    - run:
+        name: Run Unit Tests
+        command: ./gradlew testDebugUnitTest --continue
+    - run:
+        name: Save test results
+        command: |
+          sudo chmod +x move_unit_test_results.sh
+          ./move_unit_test_results.sh
+        when: always
+    - store_test_results:
+        path: ~/unit_test_results
+    - store_artifacts:
+        path: ~/unit_test_results
+
+workflows:
+  version: 2
+  check:
+    jobs:
+    - config_cache
+#    - detekt:
+#        requires:
+#        - config_cache
+    #      - ktlint
+#    - android_lint:
+#        requires:
+#        - config_cache
+    - unit_tests:
+        requires:
+        - config_cache
