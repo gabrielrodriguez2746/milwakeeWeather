@@ -16,6 +16,19 @@ android {
         versionCode getAppVersionCode()
         versionName getAppVersionName()
     }
+
+    flavorDimensions "server"
+    productFlavors {
+        prod {
+            applicationId = "com.milwaukee.weather"
+        }
+        dev {
+            resConfigs("es", "xxhdpi")
+            applicationId = "com.milwaukee.weather.dev"
+            versionNameSuffix '-DEV'
+        }
+    }
+
     buildTypes {
 
         debug {
