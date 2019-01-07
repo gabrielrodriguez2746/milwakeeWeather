@@ -190,6 +190,7 @@ workflows:
             - master
             - release/*
     - deploy_play_store:
+        type: approval
         requires:
         - config_cache
         branches:
