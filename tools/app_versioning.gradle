@@ -91,7 +91,12 @@ private static String generateVersionName(Integer versionNameMajor,
 }
 
 private static Integer getBuildNumber() {
-    def buildNumber = System.getenv("BITRISE_BUILD_NUMBER")
+    def buildNumber
+    if (System.getenv().containsKey("BITRISE_BUILD_NUMBER")) {
+        buildNumber = System.getenv("BITRISE_BUILD_NUMBER")
+    } else {
+        buildNumber = System.getenv("CIRCLE_BUILD_NUM")
+    }
     if (buildNumber != null) {
         buildNumber = buildNumber.toInteger()
     } else {
