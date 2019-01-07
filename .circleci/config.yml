@@ -185,6 +185,14 @@ workflows:
     - unit_tests:
         requires:
         - config_cache
+        branches:
+          ignore:
+            - master
+            - release/*
     - deploy_play_store:
         requires:
         - config_cache
+        branches:
+          only:
+            - master
+            - release/*
