@@ -184,16 +184,16 @@ workflows:
     #        - config_cache
     - unit_tests:
         requires:
-        - config_cache
-        branches:
-          ignore:
-            - master
-            - release/*
+          - config_cache
+        filters:
+          branches:
+            ignore:
+              - master
     - deploy_play_store:
         type: approval
         requires:
-        - config_cache
-        branches:
-          only:
-            - master
-            - release/*
+          - config_cache
+        filters:
+          branches:
+            only:
+              - master
