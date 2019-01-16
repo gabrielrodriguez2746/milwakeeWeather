@@ -192,6 +192,7 @@ workflows:
           branches:
             ignore:
               - master
+              - /release*/
 #    - deploy_play_store:
 #        type: approval
 #        requires:
