@@ -21,7 +21,6 @@ gen_cache_key: &gen_cache_key
   run:
     name: Generate cache key
     command: |
-      sudo chmod +x checksum.sh
       ./checksum.sh /tmp/checksum.txt
 restore_cache: &restore_cache
   restore_cache:
@@ -130,13 +129,17 @@ jobs:
     - run:
         name: Save test results
         command: |
-          sudo chmod +x move_unit_test_results.sh
-          ./move_unit_test_results.sh
+          ./move_results.sh *index.html test_html_results
+          ./move_results.sh [TEST]*[.xml] test_xml_results
         when: always
     - store_test_results:
-        path: ~/unit_test_results
+        path: ~/test_html_results
     - store_artifacts:
-        path: ~/unit_test_results
+        path: ~/test_html_results
+    - store_test_results:
+        path: ~/test_xml_results
+    - store_artifacts:
+        path: ~/test_xml_results
 
   deploy_play_store:
     <<: *config_android
@@ -189,11 +192,12 @@ workflows:
           branches:
             ignore:
               - master
-    - deploy_play_store:
-        type: approval
-        requires:
-          - config_cache
-        filters:
-          branches:
-            only:
-              - master
+              - /release*/
+#    - deploy_play_store:
+#        type: approval
+#        requires:
+#          - config_cache
+#        filters:
+#          branches:
+#            only:
+#              - master
