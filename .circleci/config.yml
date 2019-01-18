@@ -177,22 +177,22 @@ workflows:
   version: 2
   check:
     jobs:
-    - config_cache
-    #    - detekt:
-    #        requires:
-    #        - config_cache
-    #      - ktlint
-    #    - android_lint:
-    #        requires:
-    #        - config_cache
-    - unit_tests:
-        requires:
-          - config_cache
-        filters:
-          branches:
-            ignore:
-              - master
-              - /release*/
+      - config_cache
+      #    - detekt:
+      #        requires:
+      #        - config_cache
+      #      - ktlint
+      #    - android_lint:
+      #        requires:
+      #        - config_cache
+      - unit_tests:
+          requires:
+            - config_cache
+          filters:
+            branches:
+              ignore:
+                - master
+                - /release*/
     nightly:
       triggers:
         - schedule:
@@ -202,10 +202,10 @@ workflows:
                 only:
                   - master
       jobs:
-      - config_cache
-      - unit_tests:
-          requires:
-          - config_cache
+        - config_cache
+        - unit_tests:
+            requires:
+            - config_cache
 
 #    - deploy_play_store:
 #        type: approval
