@@ -193,19 +193,19 @@ workflows:
               ignore:
                 - master
                 - /release*/
-    nightly:
-      triggers:
-        - schedule:
-            cron: "32 20 * * *"
-            filters:
-              branches:
-                only:
-                  - master
-      jobs:
-        - config_cache
-        - unit_tests:
-            requires:
-            - config_cache
+  nightly:
+    triggers:
+      - schedule:
+          cron: "32 20 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - config_cache
+      - unit_tests:
+          requires:
+          - config_cache
 
 #    - deploy_play_store:
 #        type: approval
