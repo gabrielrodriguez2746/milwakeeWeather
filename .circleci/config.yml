@@ -173,6 +173,13 @@ jobs:
         path: app/build/outputs/mapping/
         destination: /mapping
 
+  cd_automation:
+    <<: *config_android
+    steps:
+    - run:
+        name: Trigger TEST build
+        command: curl -X POST $TEST_JOB_URL
+
 workflows:
   version: 2
   check:
@@ -215,3 +222,11 @@ workflows:
 #          branches:
 #            only:
 #              - master
+
+  testbuild:
+    filters:
+      branches:
+        only:
+          - master
+    jobs:
+      - cd_automation
