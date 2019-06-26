@@ -178,7 +178,8 @@ jobs:
     steps:
     - run:
         name: Trigger TEST build
-        command: curl -X POST $TEST_JOB_URL
+        command: |
+          curl -X GET $TEST_JOB_URL
 
 workflows:
   version: 2
@@ -224,9 +225,9 @@ workflows:
 #              - master
 
   testbuild:
-    filters:
-      branches:
-        only:
-          - master
     jobs:
-      - cd_automation
+      - cd_automation:
+          filters:
+            branches:
+              only:
+                - master
