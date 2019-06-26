@@ -224,10 +224,10 @@ workflows:
 #            only:
 #              - master
 
-  testbuild:
-    jobs:
-      - cd_automation:
-          filters:
-            branches:
-              only:
-                - master
+#  testbuild:
+#    jobs:
+#      - cd_automation:
+#          filters:
+#            branches:
+#              only:
+#                - master
